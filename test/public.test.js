@@ -9,7 +9,7 @@ test('V1.sign needs a RSA key', async t => {
   const { privateKey } = await generateKeyPair('ec', { namedCurve: 'P-256' })
   return t.throwsAsync(
     V1.sign({}, privateKey),
-    { instanceOf: TypeError, message: 'v1.public signing key must be a private RSA key' }
+    { instanceOf: TypeError, message: 'v1.public signing key must be a private RSA key with 2048 bit modulus length' }
   )
 })
 
@@ -17,7 +17,7 @@ test('V1.sign needs a private key', async t => {
   const { publicKey } = await generateKeyPair('rsa', { modulusLength: 2048 })
   return t.throwsAsync(
     V1.sign({}, publicKey),
-    { instanceOf: TypeError, message: 'v1.public signing key must be a private RSA key' }
+    { instanceOf: TypeError, message: 'v1.public signing key must be a private RSA key with 2048 bit modulus length' }
   )
 })
 
@@ -41,7 +41,7 @@ test('V1.verify needs a RSA key', async t => {
   const { privateKey } = await generateKeyPair('ec', { namedCurve: 'P-256' })
   return t.throwsAsync(
     V1.verify({}, privateKey),
-    { instanceOf: TypeError, message: 'v1.public verify key must be a public RSA key' }
+    { instanceOf: TypeError, message: 'v1.public verify key must be a public RSA key with 2048 bit modulus length' }
   )
 })
 
@@ -73,7 +73,7 @@ test('invalid RSA key length for v1.public', async t => {
   const { privateKey } = await generateKeyPair('rsa', { modulusLength: 1024 })
   await t.throwsAsync(
     V1.sign({}, privateKey),
-    { instanceOf: TypeError, message: 'invalid v1.public signing key bit length' }
+    { instanceOf: TypeError, message: 'v1.public signing key must be a private RSA key with 2048 bit modulus length' }
   )
 })
 

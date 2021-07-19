@@ -22,7 +22,7 @@ test('decode input must have 3 or 4 parts', t => {
 
 test('decode must be a supported header', t => {
   t.throws(
-    () => decode('v3..'),
+    () => decode('v0..'),
     { instanceOf: errors.PasetoNotSupported, code: 'ERR_PASETO_NOT_SUPPORTED', message: 'unsupported PASETO version' }
   )
   t.throws(
